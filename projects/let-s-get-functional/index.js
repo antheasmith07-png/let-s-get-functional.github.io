@@ -72,14 +72,17 @@ var averageBalance = function(array) {
             return 0;
     
     // use the function to find customer balances
-    let balance = _.reduce(array, function(total, customer){
-        //accumalate the balances
-         total += customer.balance;
-         return total; //the accumulated balance
+    let totalBalance = _.reduce(array, function(total, customer) {
+      // If balance is a string like "$2,500.15", remove symbols and convert to number
+      let balanceNum = typeof customer.balance === 'string' 
+        ? parseFloat(customer.balance.replace(/[$,]/g, '')) 
+        : customer.balance;
+  
+      return total + balanceNum;
     }, 0);
-    //divide the total of balances by the number of customers with balances
-            return balance / array.length;
-    };
+  
+    return totalBalance / array.length;
+  }
 //I:Create a function that takes in paramaters of array and letter
 //O: returns how many customers names begins with the letter
 //C: use filter method
